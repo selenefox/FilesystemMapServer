@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sevilinma.fsms.dao.filesystem.FilesDao">
+    <insert id="insertFiles" parameterType="Files" useGeneratedKeys="true" keyProperty="fileid" keyColumn="fileid">
+    <![CDATA[insert into BIS_FILESYSTEM_FILES (filename,filepath,filesize,updatetime,createtime,md5code) values(#{filename},#{filepath},#{filesize},#{updatetime},#{createtime},#{md5code})]]>
+</insert>
+    <update id="updateFiles" parameterType="Files">
+        update BIS_FILESYSTEM_FILES
+        <set>
+            <if test="filename != null">filename=#{filename},</if>
+            <if test="filepath != null">filepath=#{filepath},</if>
+            <if test="filesize != null">filesize=#{filesize},</if>
+            <if test="updatetime != null">updatetime=#{updatetime},</if>
+            <if test="createtime != null">createtime=#{createtime},</if>
+            <if test="md5code != null">md5code=#{md5code},</if>
+        </set>
+        where fileid=#{fileid}
+    </update>
+    <delete id="deleteFiles" parameterType="Long">
+    <![CDATA[delete from BIS_FILESYSTEM_FILES where fileid=#{fileid}]]>
+</delete>
+    <select id="selectFilesList" parameterType="Files" resultType="Files">
+        <![CDATA[select * from BIS_FILESYSTEM_FILES]]>
+        <where>
+            <if test="fileid != null">fileid = #{fileid}</if>
+            <if test="filename != null">and filename = #{filename}</if>
+            <if test="filepath != null">and filepath = #{filepath}</if>
+            <if test="filesize != null">and filesize = #{filesize}</if>
+            <if test="updatetime != null">and updatetime = #{updatetime}</if>
+            <if test="createtime != null">and createtime = #{createtime}</if>
+            <if test="md5code != null">and md5code = #{md5code}</if>
+        </where>
+    </select>
+</mapper>
